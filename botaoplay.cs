@@ -8,7 +8,7 @@ public class Botaoplay : MonoBehaviour
 
     public void Carregarlvl1()
     {
-        //Debug.Log("Botao foi apertado"); teste
+        //Debug.Log("Botao foi apertado"); teste2
         SceneManager.LoadSceneAsync("cenalevel1");
         
     }
