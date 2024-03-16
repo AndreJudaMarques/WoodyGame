@@ -1,63 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
-    public float Speed = 5f; // velocidade de mov do player
-    public float JumpForce;
-    private bool estaNoChao; // controla se o jogador esta no chao
+    public float Speed; // controla velocidade de mov do player
+    public float JumpForce; // controla a força do pulo
+
+    public bool isJumping;
+    public bool doubleJump;
+
+    private Rigidbody2D rig;
+    private Animator anim;
+
+    void Start()
+    {
+        rig = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
+
 
     void Update()
     {
-        move();
-        if (Input.GetKeyDown(KeyCode.UpArrow) && estaNoChao)
-        {
-            Jump();
-        }
+        Move();
+        Jump();
+        
     }
 
-    void move()
+    void Move()
     {
-        //
-        if (Input.GetKey(KeyCode.RightArrow))
+        Vector3 movimento = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+        transform.position += movimento * Time.deltaTime * Speed;
+        
+        if(Input.GetAxis("Horizontal") > 0f)
         {
-            transform.Translate(Vector2.right * Speed * Time.deltaTime);
-            // Garanta que a escala do objeto está correta
-            transform.localScale = new Vector3(1, 1, 1);
+            anim.SetBool("walk", true);
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
 
-         // Movimento para a esquerda
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if(Input.GetAxis("Horizontal") < 0f)
         {
-            transform.Translate(Vector2.left * Speed * Time.deltaTime);
-            // inverte a escala do objeto horizontalmente
-            transform.localScale = new Vector3(-1, 1, 1);
+            anim.SetBool("walk", true);
+            transform.eulerAngles = new Vector3(0f, 180f, 0f); // olha pra esquerda
         }
+
+        if(Input.GetAxis("Horizontal") == 0f)
+        {
+            anim.SetBool("walk", false);
+        }
+
+        
     }
 
     void Jump()
     {
-        // aplica força vertical para simular salto
-        GetComponent<Rigidbody2D>().AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        if(Input.GetButtonDown("Jump") && !isJumping) // "! verifica se é falso
+        {
+            if(!isJumping) // se quiser colocar double jump assistir aula 5; 7:45mins 
+            {
+                rig.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+                doubleJump = true;
+                anim.SetBool("jump", true);
+            }
+            else
+            {
+                if(doubleJump)
+                {
+                    rig.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+                    doubleJump = false;
+                    
+                }
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // verifica se o jogador esta no chao
-        if (collision.gameObject.CompareTag("Chao"))
+        if(collision.gameObject.layer == 6) // verifica se esta tocando no layer 6
         {
-            estaNoChao = true;
+            isJumping = false;
+            anim.SetBool("jump", false);
         }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        // verifica se jogador nao esta no chao
-        if (collision.gameObject.CompareTag("Chao"))
+        if(collision.gameObject.layer == 6)
         {
-            estaNoChao = false;
+            isJumping = true;
         }
-        
     }
+
 }
