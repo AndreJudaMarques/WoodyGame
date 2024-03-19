@@ -82,6 +82,12 @@ public class Player : MonoBehaviour
             isJumping = false;
             anim.SetBool("jump", false);
         }
+
+        if(collision.gameObject.layer == 10)
+        {
+            Debug.Log("TOCOUUUUU!");
+        }
+
     }
 
     void OnCollisionExit2D(Collision2D collision)
