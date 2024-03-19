@@ -8,8 +8,11 @@ public class Timer : MonoBehaviour
     private float tempoAtual;
     private bool timerIniciado = false;
 
-    private void Start()
+    public static Timer instance;
+
+    void Start()
     {
+        instance = this;
         tempoAtual = tempoTotal;
     }
 
@@ -26,8 +29,11 @@ public class Timer : MonoBehaviour
 
             if (tempoAtual <= 0f)
             {
-                Debug.Log("Tempo acabou! Chamando Game Over...");
+                StopTimer();
+                timerText.text = string.Format("0:00");
+                //Debug.Log("Tempo acabou! Chamando Game Over...");
                 // Chama o método GameOver do GameManager quando o tempo acabar
+                GameOverScipt.instance.ShowGameOver();
                 
             }
         }
@@ -36,5 +42,10 @@ public class Timer : MonoBehaviour
     public void IniciarTimer()
     {
         timerIniciado = true;
+    }
+
+    public void StopTimer()
+    {
+        timerIniciado = false;
     }
 }
