@@ -10,10 +10,10 @@ public class Botaoplay : MonoBehaviour
         
 void Update() 
     {
-    if(UnityEngine.Input.GetKeyDown(KeyCode.Space))
-    {
-        Carregarcena();
-    }
+        if(UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            Carregarcena();
+        }
     }
 
 

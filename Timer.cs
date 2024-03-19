@@ -28,7 +28,7 @@ public class Timer : MonoBehaviour
             {
                 Debug.Log("Tempo acabou! Chamando Game Over...");
                 // Chama o método GameOver do GameManager quando o tempo acabar
-                GameManager.Instance.GameOver();
+                
             }
         }
     }
