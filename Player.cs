@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.layer == 10)
         {
             Debug.Log("TOCOUUUUU!");
+            GameOverScipt.instance.ShowGameOver();
         }
 
     }
@@ -97,5 +99,5 @@ public class Player : MonoBehaviour
             isJumping = true;
         }
     }
-
+    
 }
