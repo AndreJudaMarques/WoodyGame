@@ -7,7 +7,6 @@ using UnityEngine.Windows;
 public class Botaoplay : MonoBehaviour
 {
 
-        
 void Update() 
     {
         if(UnityEngine.Input.GetKeyDown(KeyCode.Space))
@@ -23,6 +22,5 @@ void Update()
         SceneManager.LoadSceneAsync("cenalevel1");
         
     }
-
    
 }

@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("TOCOUUUUU!");
             GameOverScipt.instance.ShowGameOver();
+            Destroy(gameObject);
         }
 
     }
