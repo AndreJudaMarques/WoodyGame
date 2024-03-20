@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
 public class Botaoplay : MonoBehaviour
 {
+    
+
+    void Start() 
+    {
+    
+    }
 
 void Update() 
     {

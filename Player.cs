@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -11,6 +12,9 @@ public class Player : MonoBehaviour
 
     public bool isJumping;
     public bool doubleJump;
+
+    private bool pointA = false;
+    private bool pointB = false;
 
     private Rigidbody2D rig;
     private Animator anim;
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Jump();
+        final();
         
     }
 
@@ -92,6 +97,22 @@ public class Player : MonoBehaviour
             Timer.instance.StopTimer();
         }
 
+        if(collision.gameObject.layer == 12) // verifica se esta tocando no layer 12
+        {
+            isJumping = false;
+            anim.SetBool("jump", false);
+            pointA = true;
+            Debug.Log("pegou a grama");
+        }
+
+        if(collision.gameObject.layer == 13 && pointA) // verifica se esta tocando no layer 13
+        {
+            isJumping = false;
+            anim.SetBool("jump", false);
+            pointB = true;
+            Debug.Log("pegou a Casa");
+        }
+
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -99,6 +120,14 @@ public class Player : MonoBehaviour
         if(collision.gameObject.layer == 6)
         {
             isJumping = true;
+        }
+    }
+
+    void final()
+    {
+        if (pointA && pointB)
+        {
+            SceneManager.LoadScene("final");
         }
     }
     
